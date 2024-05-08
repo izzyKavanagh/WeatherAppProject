@@ -19,7 +19,7 @@ export const routes: Routes = [
     loadComponent: () => import('./favourites/favourites.page').then( m => m.FavouritesPage)
   },
   {
-    path: 'weather',
+    path: 'weather/:city',
     loadComponent: () => import('./weather/weather.page').then( m => m.WeatherPage)
   },
   {

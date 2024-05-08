@@ -13,15 +13,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-
+  <div id="container" class="ion-text-center">
     <ion-card *ngFor="let info of weatherInfo">
       <ion-card-content>
-        <ion-card-title>Temperature: {{ info.main?.temp }}&deg;C</ion-card-title>
+        <ion-card-title>Location: {{cityName}}</ion-card-title>
         <br>
-        <ion-card-subtitle>Feels Like: {{ info.main?.feels_like }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>Low: {{ info.main?.temp_min }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>High: {{ info.main?.temp_max }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>Temperature: {{ kelvinToCelsius(info.main?.temp) }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>Feels Like: {{ kelvinToCelsius(info.main?.feels_like) }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>Low: {{  kelvinToCelsius(info.main?.temp_min) }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>High: {{ kelvinToCelsius(info.main?.temp_max) }}&deg;C</ion-card-subtitle>
         <ion-card-subtitle>Pressure: {{ info.main?.pressure }} hPa</ion-card-subtitle>
         <ion-card-subtitle>Humidity: {{ info.main?.humidity }}%</ion-card-subtitle>
       </ion-card-content>

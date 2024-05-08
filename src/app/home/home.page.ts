@@ -25,6 +25,5 @@ export class HomePage {
   weatherInfo:any[]= [];
 
   constructor(public httpClient: HttpClient) {
-
   }
 }
