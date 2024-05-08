@@ -1,13 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>weather</ion-title>
+    <ion-title>
+      Weather Info Page
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">weather</ion-title>
+      <ion-title size="large">Weather-App Home Page</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div id="container">
+
+    <ion-card *ngFor="let info of weatherInfo">
+      <ion-card-content>
+        <ion-card-title>Temperature: {{ info.main?.temp }}&deg;C</ion-card-title>
+        <br>
+        <ion-card-subtitle>Feels Like: {{ info.main?.feels_like }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>Low: {{ info.main?.temp_min }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>High: {{ info.main?.temp_max }}&deg;C</ion-card-subtitle>
+        <ion-card-subtitle>Pressure: {{ info.main?.pressure }} hPa</ion-card-subtitle>
+        <ion-card-subtitle>Humidity: {{ info.main?.humidity }}%</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
