@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, 
@@ -12,7 +12,7 @@ import { WeatherInfoService } from '../Services/weather-info.service';
 const API_URL = environment.API_URL;
 const API_KEY = environment.API_KEY;
 
-@Component({
+@Component({ 
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
@@ -21,9 +21,32 @@ const API_KEY = environment.API_KEY;
   RouterLinkWithHref, HttpClientModule, IonItem, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle,
   IonCardContent],
 })
-export class HomePage {
-  weatherInfo:any[]= [];
+export class HomePage implements OnInit{
+  weatherInfo:any;
+  cityName:any;
 
   constructor(public httpClient: HttpClient) {
+  }
+
+  ngOnInit() {
+    const cityNameString = localStorage.getItem('currentCityName');
+    if(cityNameString !== null){
+      this.cityName = JSON.parse(cityNameString);
+    }
+    else{
+      this.cityName = null;
+    }
+
+    const weatherInfoString = localStorage.getItem('weatherCurrentLocation');
+    if (weatherInfoString !== null) {
+      this.weatherInfo = JSON.parse(weatherInfoString);
+    } else {
+        this.weatherInfo = null;
+      }
+  }
+
+  kelvinToCelsius(temp: number): string {
+    const celsius = temp - 273.15;
+    return celsius.toFixed(1);
   }
 }

@@ -14,7 +14,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card class="ion-text-center">
+  <br>
+  <ion-card class="ion-text-center" style="border: 2px; border-style: ridge; border-color: black; padding: 10px;">
     <ion-card-title>
       Current Location Details
     </ion-card-title>
@@ -28,12 +29,12 @@
   </ion-card>
   <br>
   <br>
-  <div id="container" class="ion-text-center">
-    <ion-card *ngIf="weatherInfo" style="background-color: #abcdef; border-radius: 10px">
+  <div *ngIf="weatherInfo" id="container" class="ion-text-center">
+    <ion-card style="background-color: #abcdef; border-radius: 10px;">
       <ion-card-content>
         <ion-card-title >Location: {{cityName}}</ion-card-title>
         <br>
-        <img [src]="'http://openweathermap.org/img/wn/' + weatherInfo.weather[0].icon + '.png'" alt="Weather Icon">
+        <img *ngIf="weatherInfo?.weather && weatherInfo?.weather[0]?.icon" [src]="'http://openweathermap.org/img/wn/' + weatherInfo.weather[0].icon + '.png'" alt="Weather Icon">
         <br>
         <ion-card-title>{{ kelvinToCelsius(weatherInfo.main.temp) }}&deg;C</ion-card-title>
         <br>
@@ -49,9 +50,9 @@
     </ion-card>
   </div>
   <br>
-  <ion-button expand="block" [routerLink]="['/search']">Search Current Location</ion-button>
-  <br>
-  <ion-button expand="block" (click)="clearLocalStorage()">Clear Current Location</ion-button>
-
-
+  <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" [routerLink]="['/search']">Search Current Location</ion-button>
+    <br>
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="clearLocalStorage()">Clear Current Location</ion-button>
+  </div>
 </ion-content>

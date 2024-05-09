@@ -34,7 +34,9 @@
   </ion-card>
   <br>
   <br>
-  <ion-button expand="block" [routerLink]="['/search']">Add New Favourite</ion-button>
-  <br>
-  <ion-button expand="block" (click)="clearLocalStorage()">Clear Favourites</ion-button>
+  <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" [routerLink]="['/search']">Add New Favourite</ion-button>
+    <br>
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="clearLocalStorage()">Clear Favourites</ion-button>
+  </div>
 </ion-content>

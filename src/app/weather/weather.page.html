@@ -4,7 +4,7 @@
       <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Weather Info Page
+      Weather Page
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +38,9 @@
   </div>
   <br>
   <br>
-  <ion-button expand="block" (click)="setCurrentLocation()">Save As Current Location</ion-button>
-  <br>
-  <ion-button expand="block" (click)="setFavouriteLocation()">Save As Favourite Location</ion-button>
+  <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="setCurrentLocation()">Save As Current Location</ion-button>
+    <br>
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="setFavouriteLocation()">Save As Favourite Location</ion-button>
+  </div>
 </ion-content>

@@ -40,7 +40,7 @@ export class CurrentLocationPage implements OnInit {
       this.cityName = JSON.parse(cityNameString);
     }
     else{
-      this.cityName = "Not Found"
+      this.cityName = null;
     }
 
     this.getGPS();
@@ -48,7 +48,7 @@ export class CurrentLocationPage implements OnInit {
     if (weatherInfoString !== null) {
       this.weatherInfo = JSON.parse(weatherInfoString);
     } else {
-        this.weatherInfo = "Not Found"
+        this.weatherInfo = null;
       }
   }
   async getGPS(){
@@ -85,8 +85,8 @@ export class CurrentLocationPage implements OnInit {
   }
 
   clearLocalStorage() {
-    localStorage.removeItem('weatherFavourites');
-    this.weatherInfo = []; // Clear the local data in the component
+    localStorage.removeItem('weatherCurrentLocation');
+    this.weatherInfo = null; // Clear the local data in the component
   }
-  
+
 }
