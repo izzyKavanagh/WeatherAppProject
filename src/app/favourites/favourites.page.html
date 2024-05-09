@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>favourites</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favourites</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,4 +13,16 @@
       <ion-title size="large">favourites</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-card *ngIf="weatherInfo">
+    <ion-card-content>
+      <ion-card-title>Location: {{ weatherInfo.name }}</ion-card-title>
+      <ion-card-subtitle>Temperature: {{ weatherInfo.main.temp }}°C</ion-card-subtitle>
+      <ion-card-subtitle>Feels Like: {{ weatherInfo.main.feels_like }}°C</ion-card-subtitle>
+      <ion-card-subtitle>Low: {{ weatherInfo.main.temp_min }}°C</ion-card-subtitle>
+      <ion-card-subtitle>High: {{ weatherInfo.main.temp_max }}°C</ion-card-subtitle>
+      <ion-card-subtitle>Pressure: {{ weatherInfo.main.pressure }} hPa</ion-card-subtitle>
+      <ion-card-subtitle>Humidity: {{ weatherInfo.main.humidity }}%</ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

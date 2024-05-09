@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar,IonItem, IonInput,IonLabel, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,IonItem, IonInput,
+IonLabel, IonButton, IonBackButton, IonButtons} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,8 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./search.page.scss'],
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
-  IonItem, IonInput,IonLabel, IonButton
-  ]
+  IonItem, IonInput,IonLabel, IonButton, IonBackButton, IonButtons ]
 })
 export class SearchPage implements OnInit {
   cityName:any;

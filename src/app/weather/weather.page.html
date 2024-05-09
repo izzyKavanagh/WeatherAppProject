@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>
       Weather Info Page
     </ion-title>
@@ -27,4 +30,7 @@
       </ion-card-content>
     </ion-card>
   </div>
+
+  <ion-button expand="block" (click)="setCurrentLocation()">Save As Current Location</ion-button>
+  <ion-button expand="block" (click)="setFavouriteLocation()">Save As Favourite Location</ion-button>
 </ion-content>
