@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <ion-title>
       Weather Info Page
@@ -17,20 +17,28 @@
   </ion-header>
 
   <div id="container" class="ion-text-center">
-    <ion-card *ngFor="let info of weatherInfo">
+    <ion-card *ngFor="let info of weatherInfo" style="background-color: #abcdef; border-radius: 10px">
       <ion-card-content>
-        <ion-card-title>Location: {{cityName}}</ion-card-title>
+        <ion-card-title >Location: {{cityName}}</ion-card-title>
         <br>
-        <ion-card-subtitle>Temperature: {{ kelvinToCelsius(info.main?.temp) }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>Feels Like: {{ kelvinToCelsius(info.main?.feels_like) }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>Low: {{  kelvinToCelsius(info.main?.temp_min) }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>High: {{ kelvinToCelsius(info.main?.temp_max) }}&deg;C</ion-card-subtitle>
-        <ion-card-subtitle>Pressure: {{ info.main?.pressure }} hPa</ion-card-subtitle>
-        <ion-card-subtitle>Humidity: {{ info.main?.humidity }}%</ion-card-subtitle>
+        <img [src]="'http://openweathermap.org/img/wn/' + info.weather[0].icon + '.png'" alt="Weather Icon">
+        <br>
+        <ion-card-title>{{ kelvinToCelsius(info.main.temp) }}&deg;C</ion-card-title>
+        <br>
+        <div style="background-color: white; border-radius: 10px; padding: 10px;">
+          <ion-card-subtitle style="color:black">Description: {{ info.weather[0].main }}</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Feels Like: {{ kelvinToCelsius(info.main?.feels_like) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Low: {{  kelvinToCelsius(info.main?.temp_min) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">High: {{ kelvinToCelsius(info.main?.temp_max) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Pressure: {{ info.main?.pressure }} hPa</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Humidity: {{ info.main?.humidity }}%</ion-card-subtitle>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
-
+  <br>
+  <br>
   <ion-button expand="block" (click)="setCurrentLocation()">Save As Current Location</ion-button>
+  <br>
   <ion-button expand="block" (click)="setFavouriteLocation()">Save As Favourite Location</ion-button>
 </ion-content>

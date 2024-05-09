@@ -35,13 +35,21 @@ export class CurrentLocationPage implements OnInit {
   constructor(private httpClient:HttpClient, private router:Router) {}
 
   ngOnInit() {
+    const cityNameString = localStorage.getItem('currentCityName');
+    if(cityNameString !== null){
+      this.cityName = JSON.parse(cityNameString);
+    }
+    else{
+      this.cityName = "Not Found"
+    }
+
     this.getGPS();
     const weatherInfoString = localStorage.getItem('weatherCurrentLocation');
     if (weatherInfoString !== null) {
       this.weatherInfo = JSON.parse(weatherInfoString);
     } else {
-    // Handle the case where 'weatherInfo' is null (not found in local storage)
-    }
+        this.weatherInfo = "Not Found"
+      }
   }
   async getGPS(){
     this.coordinates = await Geolocation.getCurrentPosition();
@@ -71,8 +79,14 @@ export class CurrentLocationPage implements OnInit {
       });
   }
   
-  search() {
-    
+  kelvinToCelsius(temp: number): string {
+    const celsius = temp - 273.15;
+    return celsius.toFixed(1);
   }
 
+  clearLocalStorage() {
+    localStorage.removeItem('weatherFavourites');
+    this.weatherInfo = []; // Clear the local data in the component
+  }
+  
 }

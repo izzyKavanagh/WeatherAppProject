@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <ion-title>Current Location</ion-title>
   </ion-toolbar>
@@ -16,7 +16,7 @@
 
   <ion-card class="ion-text-center">
     <ion-card-title>
-      Current Location
+      Current Location Details
     </ion-card-title>
     <ion-card-content>
       Latitude: {{ lat }}<br>
@@ -28,18 +28,30 @@
   </ion-card>
   <br>
   <br>
-  <ion-card *ngIf="weatherInfo">
-    <ion-card-content>
-      <ion-card-title>Current Location: {{ weatherInfo.name }}</ion-card-title>
-      <ion-card-subtitle>Temperature: {{ weatherInfo.main.temp }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Feels Like: {{ weatherInfo.main.feels_like }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Low: {{ weatherInfo.main.temp_min }}°C</ion-card-subtitle>
-      <ion-card-subtitle>High: {{ weatherInfo.main.temp_max }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Pressure: {{ weatherInfo.main.pressure }} hPa</ion-card-subtitle>
-      <ion-card-subtitle>Humidity: {{ weatherInfo.main.humidity }}%</ion-card-subtitle>
-    </ion-card-content>
-  </ion-card>
+  <div id="container" class="ion-text-center">
+    <ion-card *ngIf="weatherInfo" style="background-color: #abcdef; border-radius: 10px">
+      <ion-card-content>
+        <ion-card-title >Location: {{cityName}}</ion-card-title>
+        <br>
+        <img [src]="'http://openweathermap.org/img/wn/' + weatherInfo.weather[0].icon + '.png'" alt="Weather Icon">
+        <br>
+        <ion-card-title>{{ kelvinToCelsius(weatherInfo.main.temp) }}&deg;C</ion-card-title>
+        <br>
+        <div style="background-color: white; border-radius: 10px; padding: 10px;">
+          <ion-card-subtitle style="color:black">Description: {{ weatherInfo.weather[0].main }}</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Feels Like: {{ kelvinToCelsius(weatherInfo.main?.feels_like) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Low: {{  kelvinToCelsius(weatherInfo.main?.temp_min) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">High: {{ kelvinToCelsius(weatherInfo.main?.temp_max) }}&deg;C</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Pressure: {{ weatherInfo.main?.pressure }} hPa</ion-card-subtitle>
+          <ion-card-subtitle style="color:black">Humidity: {{ weatherInfo.main?.humidity }}%</ion-card-subtitle>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <br>
-  <ion-button expand="block" [routerLink]="['/search']">Search Current Location Weather</ion-button>
+  <ion-button expand="block" [routerLink]="['/search']">Search Current Location</ion-button>
+  <br>
+  <ion-button expand="block" (click)="clearLocalStorage()">Clear Current Location</ion-button>
+
 
 </ion-content>

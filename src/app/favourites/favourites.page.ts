@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonButtons,
-  IonCard, IonCardContent, IonCardHeader, IonLabel, IonCardTitle, IonCardSubtitle
- } from '@ionic/angular/standalone';
-import { FavouritesService } from '../Services/favourites.service';
+IonCard, IonCardContent, IonCardHeader, IonLabel, IonCardTitle, IonCardSubtitle,
+IonButton } from '@ionic/angular/standalone';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-favourites',
@@ -13,20 +13,34 @@ import { FavouritesService } from '../Services/favourites.service';
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
   IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonLabel, 
-  IonCardTitle, IonCardSubtitle]
+  IonCardTitle, IonCardSubtitle, RouterLinkWithHref, IonButton]
 })
 export class FavouritesPage implements OnInit {
-  weatherInfo:any;
+  weatherInfo:any [] = [];
+  cityName:any;
 
-  constructor(private favouritesService:FavouritesService) { }
+  constructor() { }
 
   ngOnInit() {
-    const weatherInfoString = localStorage.getItem('weatherFavourites');
-    if (weatherInfoString !== null) {
-      this.weatherInfo = JSON.parse(weatherInfoString);
-    } else {
-    // Handle the case where 'weatherInfo' is null (not found in local storage)
+    const weatherFavouritesString = localStorage.getItem('weatherFavourites');
+  if (weatherFavouritesString !== null) {
+    try {
+      this.weatherInfo = JSON.parse(weatherFavouritesString);
+      console.log('Weather favourites:', this.weatherInfo); // Log the retrieved data
+    } catch (error) {
+      console.error('Error parsing weather favourites data:', error);
     }
+  }
+  }
+
+  kelvinToCelsius(temp: number): string {
+    const celsius = temp - 273.15;
+    return celsius.toFixed(1);
+  }
+
+  clearLocalStorage() {
+    localStorage.removeItem('weatherFavourites');
+    this.weatherInfo = []; // Clear the local data in the component
   }
 
 }

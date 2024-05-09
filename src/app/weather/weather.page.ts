@@ -90,17 +90,9 @@ export class WeatherPage implements OnInit {
 
   async setCurrentLocation(){
     if (this.weatherInfo.length > 0) {
-      const weather = this.weatherInfo[0];
-      if (weather !== null) {
-        // Parse the weatherInfo string into an object
-        let weatherInfo = JSON.parse(weather);
-  
-        // Update the weatherInfo with new data
-        weatherInfo.temperature = 25; // Example: Update the temperature
-  
-        // Save the updated weatherInfo back to local storage
-        localStorage.setItem('weatherCurrentLocation', JSON.stringify(weather));
-      }
+      const city = this.cityName;
+      localStorage.setItem('currentCityName', JSON.stringify(city));
+      const weather = this.weatherInfo[0]; // Assuming weatherInfo array contains weather data for one location
       localStorage.setItem('weatherCurrentLocation', JSON.stringify(weather));
       this.router.navigate(['/current-location']);
     } else {
@@ -108,15 +100,37 @@ export class WeatherPage implements OnInit {
     }
   }
 
-  async setFavouriteLocation(){
-     if (this.weatherInfo.length > 0) {
-       const weather = this.weatherInfo[0]; // Assuming weatherInfo array contains weather data for one location
-       localStorage.setItem('weatherFavourites', JSON.stringify(weather));
-       this.router.navigate(['/favourites']);
-     } else {
-       this.presentAlert('Weather Not Found', 'No weather information available to save.');
-     }
-   }
+  async setFavouriteLocation() {
+    if (this.weatherInfo.length > 0) {
+      const city = this.cityName;
+      let weatherFavourites: any[] = [];
+      const storedWeatherFavouritesString = localStorage.getItem('weatherFavourites');
+      
+      if (storedWeatherFavouritesString) {
+        // Check if the retrieved data is an array
+        try {
+          weatherFavourites = JSON.parse(storedWeatherFavouritesString);
+          if (!Array.isArray(weatherFavourites)) {
+            // If the retrieved data is not an array, create a new array
+            weatherFavourites = [];
+          }
+        } catch (error) {
+          console.error('Error parsing weather favourites data:', error);
+          weatherFavourites = [];
+        }
+      }
+  
+      weatherFavourites.push({
+        city: city,
+        weather: this.weatherInfo[0] // Assuming weatherInfo array contains weather data for one location
+      });
+  
+      localStorage.setItem('weatherFavourites', JSON.stringify(weatherFavourites));
+      this.router.navigate(['/favourites']);
+    } else {
+      this.presentAlert('Weather Not Found', 'No weather information available to save.');
+    }
+  }
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <ion-title>Favourites</ion-title>
   </ion-toolbar>
@@ -14,15 +14,27 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card *ngIf="weatherInfo">
+  <ion-card *ngFor="let info of weatherInfo" style="background-color: #abcdef; border-radius: 10px">
     <ion-card-content>
-      <ion-card-title>Location: {{ weatherInfo.name }}</ion-card-title>
-      <ion-card-subtitle>Temperature: {{ weatherInfo.main.temp }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Feels Like: {{ weatherInfo.main.feels_like }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Low: {{ weatherInfo.main.temp_min }}°C</ion-card-subtitle>
-      <ion-card-subtitle>High: {{ weatherInfo.main.temp_max }}°C</ion-card-subtitle>
-      <ion-card-subtitle>Pressure: {{ weatherInfo.main.pressure }} hPa</ion-card-subtitle>
-      <ion-card-subtitle>Humidity: {{ weatherInfo.main.humidity }}%</ion-card-subtitle>
+      <ion-card-title>{{ info.city }}</ion-card-title>
+      <br>
+      <img [src]="'http://openweathermap.org/img/wn/' + info.weather.weather[0].icon + '.png'" alt="Weather Icon">
+      <br>
+      <ion-card-title>{{ kelvinToCelsius(info.weather.main?.temp) }}°C</ion-card-title>
+      <br>
+      <div style="background-color: white; border-radius: 10px; padding: 10px;">
+        <ion-card-subtitle style="color:black">Description: {{ info.weather.weather[0].main }}</ion-card-subtitle>
+        <ion-card-subtitle style="color:black">Feels Like: {{ kelvinToCelsius(info.weather.main?.feels_like) }}°C</ion-card-subtitle>
+        <ion-card-subtitle style="color:black">Low: {{ kelvinToCelsius(info.weather.main?.temp_min) }}°C</ion-card-subtitle>
+        <ion-card-subtitle style="color:black">High: {{ kelvinToCelsius(info.weather.main?.temp_max) }}°C</ion-card-subtitle>
+        <ion-card-subtitle style="color:black">Pressure: {{ info.weather.main?.pressure }} hPa</ion-card-subtitle>
+        <ion-card-subtitle style="color:black">Humidity: {{ info.weather.main?.humidity }}%</ion-card-subtitle>
+      </div>
     </ion-card-content>
   </ion-card>
+  <br>
+  <br>
+  <ion-button expand="block" [routerLink]="['/search']">Add New Favourite</ion-button>
+  <br>
+  <ion-button expand="block" (click)="clearLocalStorage()">Clear Favourites</ion-button>
 </ion-content>
