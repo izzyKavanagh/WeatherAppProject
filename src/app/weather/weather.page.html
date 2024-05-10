@@ -10,12 +10,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Weather-App Home Page</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container" class="ion-text-center">
     <ion-card *ngFor="let info of weatherInfo" style="background-color: #abcdef; border-radius: 10px">
       <ion-card-content>
@@ -33,6 +27,33 @@
           <ion-card-subtitle style="color:black">Pressure: {{ info.main?.pressure }} hPa</ion-card-subtitle>
           <ion-card-subtitle style="color:black">Humidity: {{ info.main?.humidity }}%</ion-card-subtitle>
         </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div id="container" class="ion-text-center">
+    <ion-card *ngFor="let forecast of weatherForecast" style="background-color: #d7d7d7; border-color: rgb(189, 189, 189); border-width: 2px; border-style: ridge; margin: 10px; border-radius: 10px;">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="4">Tomorrow</ion-col>
+          <ion-col size="4">{{ formatDate(forecast.list[12].dt) }}</ion-col>
+          <ion-col size="4">{{ formatDate(forecast.list[20].dt) }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">{{ formatTime(forecast.list[4].dt) }}</ion-col>
+          <ion-col size="4">{{ formatTime(forecast.list[12].dt) }}</ion-col>
+          <ion-col size="4">{{ formatTime(forecast.list[20].dt) }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[4].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
+          <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[12].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
+          <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[20].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">{{ kelvinToCelsius(forecast.list[4].main.temp) }}&deg;C</ion-col>
+          <ion-col size="4">{{ kelvinToCelsius(forecast.list[12].main.temp) }}&deg;C</ion-col>
+          <ion-col size="4">{{ kelvinToCelsius(forecast.list[20].main.temp) }}&deg;C</ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </div>

@@ -8,13 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favourites</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-card *ngFor="let info of weatherInfo" style="background-color: #abcdef; border-radius: 10px">
+  <ion-card *ngFor="let info of weatherInfo" class="ion-text-center" style="background-color: #abcdef; border-radius: 10px">
     <ion-card-content>
       <ion-card-title>{{ info.city }}</ion-card-title>
       <br>

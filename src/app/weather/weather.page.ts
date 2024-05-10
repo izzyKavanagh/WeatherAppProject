@@ -2,21 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, 
-  IonItem, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle,
-IonCardContent, IonBackButton, IonButtons } from '@ionic/angular/standalone';
+IonItem, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle,
+IonCardContent, IonBackButton, IonButtons, IonRow, IonCol } from '@ionic/angular/standalone';
 import { RouterLinkWithHref, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { WeatherInfoService } from '../Services/weather-info.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FavouritesService } from '../Services/favourites.service';
-//import { Storage } from '@ionic/storage-angular';
-
 
 const API_URL = environment.API_URL;
 const API_KEY = environment.API_KEY;
 const API_URL2 = environment.API_URL2;
+const API_URL3 = environment.API_URL3;
 
 @Component({
   selector: 'app-weather',
@@ -25,11 +23,12 @@ const API_URL2 = environment.API_URL2;
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, CommonModule, FormsModule, 
     RouterLinkWithHref, HttpClientModule, IonItem, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle,
-    IonCardContent, IonBackButton, IonButtons]
+    IonCardContent, IonBackButton, IonButtons, IonRow, IonCol]
 })
 export class WeatherPage implements OnInit {
 
   weatherInfo:any[]= [];
+  weatherForecast:any[] = [];
   cityName:string = "";
   lat:number = 0;
   lon:number = 0;
@@ -60,6 +59,7 @@ export class WeatherPage implements OnInit {
             console.log('Longitude:', this.lon);
             // Call the method to fetch weather data using this.lat and this.lon
             this.getWeather();
+            this.getForecast();
           } else {
             this.presentAlert('Location Not Found', 'The specified city was not found.');
             console.error('Location not found');
@@ -77,8 +77,15 @@ export class WeatherPage implements OnInit {
   }
 
   getWeather() {
-    this.httpClient.get<any>(`${API_URL}/weather?lat=${this.lat}&lon=${this.lon}&appid=${API_KEY}`).subscribe((result) => {
+    this.httpClient.get<any>(`${API_URL}weather?lat=${this.lat}&lon=${this.lon}&appid=${API_KEY}`).subscribe((result) => {
       this.weatherInfo.push(result);
+      console.log(result);
+    });
+  }
+
+  getForecast() {
+    this.httpClient.get<any>(`${API_URL3}forecast?lat=${this.lat}&lon=${this.lon}&appid=${API_KEY}`).subscribe((result) => {
+      this.weatherForecast.push(result);
       console.log(result);
     });
   }
@@ -130,6 +137,22 @@ export class WeatherPage implements OnInit {
     } else {
       this.presentAlert('Weather Not Found', 'No weather information available to save.');
     }
+  }
+
+  formatDate(timestamp: number): string {
+    const milliseconds = timestamp * 1000;
+    const date = new Date(milliseconds);
+    // Format the date as MM/DD/YYYY and return it
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  }
+
+  formatTime(timestamp: number): string {
+    const milliseconds = timestamp * 1000;
+    const date = new Date(milliseconds);
+    // Format the time as desired (e.g., HH:MM:SS)
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   async presentAlert(header: string, message: string) {

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   API_KEY: '4f359bb66b5d6fa191ba2176fc5b11a4',
   API_URL: 'https://api.openweathermap.org/data/2.5/',
-  API_URL2: 'http://api.openweathermap.org/geo/1.0/'
+  API_URL2: 'http://api.openweathermap.org/geo/1.0/',
+  API_URL3: 'http://api.openweathermap.org/data/2.5/'
 };
 
 /*
