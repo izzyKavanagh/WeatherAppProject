@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@capacitor/geolocation';
 
+//get api key/url from environment file
 const API_URL = environment.API_URL;
 const API_KEY = environment.API_KEY;
 
@@ -30,34 +31,40 @@ export class HomePage implements OnInit{
   constructor(public httpClient: HttpClient) {
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.getTime();
+    //get the current city name from local storage
     const cityNameString = localStorage.getItem('currentCityName');
-    if(cityNameString !== null){
-      this.cityName = JSON.parse(cityNameString);
+    if(cityNameString !== null){//if the local storage is not empty
+      this.cityName = JSON.parse(cityNameString); //convert from string back to object
     }
     else{
-      this.cityName = null;
+      this.cityName = null; 
     }
 
+    //get current location weather from local storage 
     const weatherInfoString = localStorage.getItem('weatherCurrentLocation');
-    if (weatherInfoString !== null) {
-      this.weatherInfo = JSON.parse(weatherInfoString);
+    if (weatherInfoString !== null) { //if the local was not empty
+      this.weatherInfo = JSON.parse(weatherInfoString); //convert from string back to object
     } else {
         this.weatherInfo = null;
       }
   }
 
+  //method that gets current time
   async getTime()
   {
-    this.coordinates = await Geolocation.getCurrentPosition();
-    const timestamp = new Date(this.coordinates.timestamp);
+    this.coordinates = await Geolocation.getCurrentPosition(); //get user's current coordinates using plug-in
+    const timestamp = new Date(this.coordinates.timestamp); //store timestamp based on user's location
+    //convert timestamp
     const hours = timestamp.getHours().toString().padStart(2, '0');
     const minutes = timestamp.getMinutes().toString().padStart(2, '0');
-    this.time = `${hours}:${minutes}`;
+    this.time = `${hours}:${minutes}`; //returns current time (hours:minutes)
   }
+
+  //method that converst from kelvin to celsius 
   kelvinToCelsius(temp: number): string {
     const celsius = temp - 273.15;
-    return celsius.toFixed(1);
+    return celsius.toFixed(1); //returns with 1 decimal place
   }
 }

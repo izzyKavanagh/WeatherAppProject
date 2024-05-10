@@ -2,23 +2,27 @@
   <ion-toolbar>
     <ion-title>
       Home Page
-    </ion-title>
+    </ion-title> 
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-text-center">
   <ion-title style="padding: 20px; border-width: 3px; border-radius: 10px; border-style:solid; margin: 10px; border-color: black; background-color: #002142d8; color: white; margin-top: 50px;">Weather App</ion-title>
 
+  <!-- Div that displays current location weather info if user has saved a city as current location-->
   <div *ngIf="weatherInfo" style="background-color: #abcdef; border-radius: 10px; margin: 30px; padding: 20px;">
     <ion-title >Location: {{cityName}}</ion-title>
     <br>
     <ion-title>{{ time }}</ion-title>
     <br>
+    <!--displays weather icon-->
     <img *ngIf="weatherInfo?.weather && weatherInfo?.weather[0]?.icon" [src]="'http://openweathermap.org/img/wn/' + weatherInfo.weather[0].icon + '.png'" alt="Weather Icon">
     <br>
+    <!--displays temperature converted to celsius-->
     <ion-title>{{ kelvinToCelsius(weatherInfo.main.temp) }}&deg;C</ion-title>
     <br>
   </div>
+  <!--div that displays buttons to pages: search, favourites and current-location -->
   <div style="border-color: black; border-width: 5px; border-style: double; padding:30px; border-radius: 10px; margin: 30px">
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black;" [routerLink]="['/search']">Search</ion-button>
     <br>

@@ -35,25 +35,29 @@ export class CurrentLocationPage implements OnInit {
   constructor(private httpClient:HttpClient, private router:Router) {}
 
   ngOnInit() {
-    const cityNameString = localStorage.getItem('currentCityName');
+    const cityNameString = localStorage.getItem('currentCityName'); //get current city name from local storage
     if(cityNameString !== null){
-      this.cityName = JSON.parse(cityNameString);
+      this.cityName = JSON.parse(cityNameString); //convert from string
     }
     else{
       this.cityName = null;
     }
 
     this.getGPS();
+
+    //get current location weatherInfo from local storage
     const weatherInfoString = localStorage.getItem('weatherCurrentLocation');
     if (weatherInfoString !== null) {
-      this.weatherInfo = JSON.parse(weatherInfoString);
+      this.weatherInfo = JSON.parse(weatherInfoString); //convert from string
     } else {
         this.weatherInfo = null;
       }
   }
+
+  //Method that get coordinates and date/time using plugin geolocation
   async getGPS(){
-    this.coordinates = await Geolocation.getCurrentPosition();
-    const timestamp = new Date(this.coordinates.timestamp);
+    this.coordinates = await Geolocation.getCurrentPosition(); //get coordinates 
+    const timestamp = new Date(this.coordinates.timestamp); //store timestamp
 
     // Extract time of day (hours and minutes)
     const hours = timestamp.getHours().toString().padStart(2, '0');
@@ -62,16 +66,19 @@ export class CurrentLocationPage implements OnInit {
 
     // Extract date (year, month, and day)
     const year = timestamp.getFullYear();
-    const month = (timestamp.getMonth() + 1).toString().padStart(2, '0'); // Note: January is 0
+    const month = (timestamp.getMonth() + 1).toString().padStart(2, '0'); 
     const day = timestamp.getDate().toString().padStart(2, '0');
     this.date = `${year}-${month}-${day}`;
 
+    //store coordinates 
     this.lon = this.coordinates.coords.longitude;
     this.lat = this.coordinates.coords.latitude;
   }
 
+  //get current city name from coordinates
   getLocation()
   {
+    //call to reverse geocoding api 
     this.httpClient.get<any[]>(`${API_URL2}reverse?lat=${this.lat}&lon=${this.lon}&appid=${API_KEY}`).subscribe(
       (result) => {
         this.cityName = result;
@@ -79,14 +86,16 @@ export class CurrentLocationPage implements OnInit {
       });
   }
   
+  //convert kelvin to celsius
   kelvinToCelsius(temp: number): string {
     const celsius = temp - 273.15;
     return celsius.toFixed(1);
   }
 
+  //method that clears local storage for current location weather data
   clearLocalStorage() {
     localStorage.removeItem('weatherCurrentLocation');
-    this.weatherInfo = null; // Clear the local data in the component
+    this.weatherInfo = null;
   }
 
 }

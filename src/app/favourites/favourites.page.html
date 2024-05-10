@@ -8,10 +8,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!--displays cards with current weather data for favourite loations-->
   <ion-card *ngFor="let info of weatherInfo" class="ion-text-center" style="background-color: #abcdef; border-radius: 10px">
     <ion-card-content>
       <ion-card-title>{{ info.city }}</ion-card-title>
       <br>
+      <!--displays weather icon-->
       <img [src]="'http://openweathermap.org/img/wn/' + info.weather.weather[0].icon + '.png'" alt="Weather Icon">
       <br>
       <ion-card-title>{{ kelvinToCelsius(info.weather.main?.temp) }}°C</ion-card-title>
@@ -29,8 +31,10 @@
   <br>
   <br>
   <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <!--opens search page-->
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" [routerLink]="['/search']">Add New Favourite</ion-button>
     <br>
+    <!--clears local storage weather data for favourites-->
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="clearLocalStorage()">Clear Favourites</ion-button>
   </div>
 </ion-content>

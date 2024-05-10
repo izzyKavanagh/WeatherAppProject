@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!--displays current location details-->
   <ion-card class="ion-text-center" style="border: 2px; border-style: ridge; border-color: black; padding: 10px;">
     <ion-card-title>
       Current Location Details
@@ -22,6 +23,8 @@
   </ion-card>
   <br>
   <br>
+
+  <!--displays card for current weather data if user has set a current location-->
   <div *ngIf="weatherInfo" id="container" class="ion-text-center">
     <ion-card style="background-color: #abcdef; border-radius: 10px;">
       <ion-card-content>
@@ -44,8 +47,10 @@
   </div>
   <br>
   <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <!--button that opens search page-->
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" [routerLink]="['/search']">Search Current Location</ion-button>
     <br>
+    <!--button that clears local storage for current location weather data-->
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="clearLocalStorage()">Clear Current Location</ion-button>
   </div>
 </ion-content>

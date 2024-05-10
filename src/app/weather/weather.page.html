@@ -10,15 +10,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!--div that displays city current weather-->
   <div id="container" class="ion-text-center">
+    <!--displays card if the city is found in the API-->
     <ion-card *ngFor="let info of weatherInfo" style="background-color: #abcdef; border-radius: 10px">
       <ion-card-content>
         <ion-card-title >Location: {{cityName}}</ion-card-title>
         <br>
+        <!--display weather icon for current weather-->
         <img [src]="'http://openweathermap.org/img/wn/' + info.weather[0].icon + '.png'" alt="Weather Icon">
         <br>
+        <!--display current tempertaure converted to celsius-->
         <ion-card-title>{{ kelvinToCelsius(info.main.temp) }}&deg;C</ion-card-title>
         <br>
+        <!--div that displays and formats additional current weather information-->
         <div style="background-color: white; border-radius: 10px; padding: 10px;">
           <ion-card-subtitle style="color:black">Description: {{ info.weather[0].main }}</ion-card-subtitle>
           <ion-card-subtitle style="color:black">Feels Like: {{ kelvinToCelsius(info.main?.feels_like) }}&deg;C</ion-card-subtitle>
@@ -31,25 +36,31 @@
     </ion-card>
   </div>
 
+  <!--div that displays forecast for city-->
   <div id="container" class="ion-text-center">
     <ion-card *ngFor="let forecast of weatherForecast" style="background-color: #d7d7d7; border-color: rgb(189, 189, 189); border-width: 2px; border-style: ridge; margin: 10px; border-radius: 10px;">
       <ion-card-content>
+        <!--displays date-->
         <ion-row>
           <ion-col size="4">Tomorrow</ion-col>
-          <ion-col size="4">{{ formatDate(forecast.list[12].dt) }}</ion-col>
+          <!--gets and displays correctly formatted date for next two days-->
+          <ion-col size="4">{{ formatDate(forecast.list[12].dt) }}</ion-col> 
           <ion-col size="4">{{ formatDate(forecast.list[20].dt) }}</ion-col>
         </ion-row>
         <ion-row>
+          <!--gets and displays correctly formatted time for next three days-->
           <ion-col size="4">{{ formatTime(forecast.list[4].dt) }}</ion-col>
           <ion-col size="4">{{ formatTime(forecast.list[12].dt) }}</ion-col>
           <ion-col size="4">{{ formatTime(forecast.list[20].dt) }}</ion-col>
         </ion-row>
         <ion-row>
+          <!--displays forcast icons for next three days-->
           <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[4].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
           <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[12].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
           <ion-col size="4"><img [src]="'http://openweathermap.org/img/wn/' + forecast.list[20].weather[0].icon + '.png'" alt="Weather Icon"></ion-col>
         </ion-row>
         <ion-row>
+          <!--converst temp to celsius and displays it -->
           <ion-col size="4">{{ kelvinToCelsius(forecast.list[4].main.temp) }}&deg;C</ion-col>
           <ion-col size="4">{{ kelvinToCelsius(forecast.list[12].main.temp) }}&deg;C</ion-col>
           <ion-col size="4">{{ kelvinToCelsius(forecast.list[20].main.temp) }}&deg;C</ion-col>
@@ -60,8 +71,10 @@
   <br>
   <br>
   <div class="ion-text-center" style="border-color: black; border-width: 3px; border-style: double; padding:5px; border-radius: 10px; margin: 10px">
+    <!--button that saves current city weather to local storage as current location and opens current location page-->
     <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="setCurrentLocation()">Save As Current Location</ion-button>
     <br>
-    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="setFavouriteLocation()">Save As Favourite Location</ion-button>
+    <!--button that saves current city weather in local storage as a favourite location and opens favourites page-->
+    <ion-button color="null" style="background-color: #abcdef; border-radius: 5px; color: black; margin:10px;" (click)="setFavouriteLocation()">Save To Favourites</ion-button>
   </div>
 </ion-content>
